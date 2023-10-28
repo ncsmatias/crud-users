@@ -36,7 +36,7 @@ func (uc *userController) CreateUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("New user created", journey)
+	logger.Info("New user created", journey, zap.String("user", domain.ToString()))
 	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(domain))
 
 }
