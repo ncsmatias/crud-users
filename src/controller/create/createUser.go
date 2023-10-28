@@ -7,12 +7,13 @@ import (
 	"github.com/ncsmatias/crud-users/src/configuration/logger"
 	"github.com/ncsmatias/crud-users/src/configuration/validation"
 	"github.com/ncsmatias/crud-users/src/controller/model/request"
-	userdomain "github.com/ncsmatias/crud-users/src/model/userDomain"
+	"github.com/ncsmatias/crud-users/src/model/domain"
+	userservice "github.com/ncsmatias/crud-users/src/model/service/userService"
 	"go.uber.org/zap"
 )
 
 var (
-	UserDomainInterface userdomain.UserDomainInterface
+	UserDomainInterface domain.UserDomainInterface
 )
 
 func CreateUser(c *gin.Context) {
@@ -27,9 +28,10 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	domain := userdomain.NewUserDomain(userRequest.Email, userRequest.Name, userRequest.Password, userRequest.Admin)
+	domain := domain.NewUserDomain(userRequest.Email, userRequest.Name, userRequest.Password, userRequest.Admin)
+	service := userservice.NewUserDomainService()
 
-	if err := domain.CreateUser(); err != nil {
+	if err := service.CreateUser(domain); err != nil {
 
 		c.JSON(err.Code, err)
 		return
