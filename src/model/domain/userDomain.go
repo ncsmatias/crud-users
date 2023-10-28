@@ -3,6 +3,7 @@ package domain
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 )
 
 type UserDomainInterface interface {
@@ -12,6 +13,7 @@ type UserDomainInterface interface {
 	GetAdmin() bool
 
 	EncryptPassword()
+	ToString() string
 }
 
 func NewUserDomain(email, name, password string, admin bool) UserDomainInterface {
@@ -47,4 +49,13 @@ func (ud *userDomain) EncryptPassword() {
 
 	hash.Write([]byte(ud.password))
 	ud.password = hex.EncodeToString(hash.Sum(nil))
+}
+
+func (ud *userDomain) ToString() string {
+	adminStr := "false"
+	if ud.admin {
+		adminStr = "true"
+	}
+
+	return fmt.Sprintf("{Email: %s, Name: %s, Admin: %s}", ud.email, ud.name, adminStr)
 }
