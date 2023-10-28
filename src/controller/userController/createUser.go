@@ -1,14 +1,14 @@
-package create
+package usercontroller
 
 import (
-	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ncsmatias/crud-users/src/configuration/logger"
 	"github.com/ncsmatias/crud-users/src/configuration/validation"
 	"github.com/ncsmatias/crud-users/src/controller/model/request"
 	"github.com/ncsmatias/crud-users/src/model/domain"
-	userservice "github.com/ncsmatias/crud-users/src/model/service/userService"
+	"github.com/ncsmatias/crud-users/src/view"
 	"go.uber.org/zap"
 )
 
@@ -16,7 +16,7 @@ var (
 	UserDomainInterface domain.UserDomainInterface
 )
 
-func CreateUser(c *gin.Context) {
+func (uc *userController) CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 	journey := zap.String("journey", "[controller] create user")
 
@@ -29,15 +29,14 @@ func CreateUser(c *gin.Context) {
 	}
 
 	domain := domain.NewUserDomain(userRequest.Email, userRequest.Name, userRequest.Password, userRequest.Admin)
-	service := userservice.NewUserDomainService()
 
-	if err := service.CreateUser(domain); err != nil {
+	if err := uc.service.CreateUser(domain); err != nil {
 
 		c.JSON(err.Code, err)
 		return
 	}
 
 	logger.Info("New user created", journey)
-	fmt.Println(userRequest)
+	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(domain))
 
 }

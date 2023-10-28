@@ -2,17 +2,14 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ncsmatias/crud-users/src/controller/create"
-	"github.com/ncsmatias/crud-users/src/controller/delete"
-	"github.com/ncsmatias/crud-users/src/controller/find"
-	"github.com/ncsmatias/crud-users/src/controller/update"
+	usercontroller "github.com/ncsmatias/crud-users/src/controller/userController"
 )
 
-func InitRoutes(r *gin.RouterGroup) {
+func InitRoutes(r *gin.RouterGroup, userController usercontroller.UserControllerInterface) {
 
-	r.GET("/user/id/:id", find.FindUserByID)
-	r.GET("/user/email/:email", find.FindUserByEmail)
-	r.POST("/user", create.CreateUser)
-	r.PUT("/user/:id", update.UpdateUser)
-	r.DELETE("/user/:id", delete.DeleteUser)
+	r.GET("/user/id/:id", userController.FindUserByID)
+	r.GET("/user/email/:email", userController.FindUserByEmail)
+	r.POST("/user", userController.CreateUser)
+	r.PUT("/user/:id", userController.UpdateUser)
+	r.DELETE("/user/:id", userController.DeleteUser)
 }
