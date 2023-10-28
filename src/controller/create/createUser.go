@@ -12,7 +12,7 @@ import (
 
 func CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
-	journey := zap.String("journey", "create user")
+	journey := zap.String("journey", "[controller] create user")
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		logger.Error("Error trying to create a new user", err, journey)
