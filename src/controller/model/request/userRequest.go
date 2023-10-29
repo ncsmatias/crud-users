@@ -16,6 +16,6 @@ type UserRequest struct {
 	Department string `json:"department" binding:"required_if=Role professor"`
 
 	Course      string    `json:"course" binding:"required_if=Role student"`
-	TypeStudent string    `json:"type_student" binding:"required_if=Role student,oneof=undergraduate masters doctoral"`
+	TypeStudent string    `json:"type_student" binding:"required_if=Role student"`
 	ProfessorID uuid.UUID `json:"professor_id" binding:"required_if=Role student"`
 }
