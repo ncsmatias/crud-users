@@ -1,7 +1,9 @@
 package response
 
+import "github.com/google/uuid"
+
 type ProfessorResponse struct {
-	ID         string `json:"id"`
-	Department string `json:"department"`
-	UserID     string `json:"user_id"`
+	ID         uuid.UUID `json:"id"`
+	Department string    `json:"department"`
+	UserID     uuid.UUID `json:"user_id"`
 }

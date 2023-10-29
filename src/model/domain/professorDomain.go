@@ -1,28 +1,32 @@
 package domain
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 type ProfessorDomainInterface interface {
 	GetDepartment() string
-	GetUserID() string
+	GetUserID() uuid.UUID
 
 	ToString() string
 }
 
-func NewProfessorDomain(department, userID string) ProfessorDomainInterface {
+func NewProfessorDomain(department string, userID uuid.UUID) ProfessorDomainInterface {
 	return &professorDomain{department: department, userID: userID}
 }
 
 type professorDomain struct {
 	department string
-	userID     string
+	userID     uuid.UUID
 }
 
 func (pd *professorDomain) GetDepartment() string {
 	return pd.department
 }
 
-func (pd *professorDomain) GetUserID() string {
+func (pd *professorDomain) GetUserID() uuid.UUID {
 	return pd.userID
 }
 
