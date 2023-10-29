@@ -3,7 +3,7 @@ package globaltypes
 type UserRole string
 
 const (
-	RoleManager UserRole = "manager"
-	RoleTeacher UserRole = "teacher"
-	RoleStudent UserRole = "student"
+	RoleManager   UserRole = "manager"
+	RoleProfessor UserRole = "professor"
+	RoleStudent   UserRole = "student"
 )

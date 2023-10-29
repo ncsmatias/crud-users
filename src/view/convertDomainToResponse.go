@@ -15,3 +15,11 @@ func ConvertUserDomainToResponse(userDomain domain.UserDomainInterface) response
 		InstitutionID: userDomain.GetinstitutionID(),
 	}
 }
+
+func ConvertProfessorDomainToResponse(professorDomain domain.ProfessorDomainInterface) response.ProfessorResponse {
+	return response.ProfessorResponse{
+		ID:         "",
+		Department: professorDomain.GetDepartment(),
+		UserID:     professorDomain.GetUserID(),
+	}
+}
