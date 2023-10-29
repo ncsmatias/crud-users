@@ -1,8 +1,6 @@
 package userservice
 
 import (
-	"fmt"
-
 	"github.com/ncsmatias/crud-users/src/configuration/logger"
 	"github.com/ncsmatias/crud-users/src/configuration/resterr"
 	"github.com/ncsmatias/crud-users/src/model/domain"
@@ -15,6 +13,5 @@ func (ud *userDomainService) CreateUser(userDomain domain.UserDomainInterface) *
 	logger.Info("new user created", journey)
 	userDomain.EncryptPassword()
 
-	fmt.Println(userDomain.GetEmail())
 	return nil
 }

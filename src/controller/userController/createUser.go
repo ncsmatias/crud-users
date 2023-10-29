@@ -28,7 +28,7 @@ func (uc *userController) CreateUser(c *gin.Context) {
 		return
 	}
 
-	domain := domain.NewUserDomain(userRequest.Email, userRequest.Name, userRequest.Password, userRequest.Admin)
+	domain := domain.NewUserDomain(userRequest.Email, userRequest.Name, userRequest.Password, userRequest.Role, userRequest.Admin, userRequest.InstitutionID)
 
 	if err := uc.service.CreateUser(domain); err != nil {
 

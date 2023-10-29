@@ -4,27 +4,34 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+
+	"github.com/google/uuid"
+	globaltypes "github.com/ncsmatias/crud-users/src/configuration/globalTypes"
 )
 
 type UserDomainInterface interface {
 	GetEmail() string
 	GetName() string
 	GetPassword() string
+	GetRole() globaltypes.UserRole
 	GetAdmin() bool
+	GetinstitutionID() uuid.UUID
 
 	EncryptPassword()
 	ToString() string
 }
 
-func NewUserDomain(email, name, password string, admin bool) UserDomainInterface {
-	return &userDomain{email: email, name: name, password: password, admin: admin}
+func NewUserDomain(email, name, password string, role globaltypes.UserRole, admin bool, institutionID uuid.UUID) UserDomainInterface {
+	return &userDomain{email: email, name: name, password: password, role: role, admin: admin, institutionID: institutionID}
 }
 
 type userDomain struct {
-	email    string
-	name     string
-	password string
-	admin    bool
+	email         string
+	name          string
+	password      string
+	role          globaltypes.UserRole
+	admin         bool
+	institutionID uuid.UUID
 }
 
 func (ud *userDomain) GetEmail() string {
@@ -39,8 +46,16 @@ func (ud *userDomain) GetPassword() string {
 	return ud.password
 }
 
+func (ud *userDomain) GetRole() globaltypes.UserRole {
+	return ud.role
+}
+
 func (ud *userDomain) GetAdmin() bool {
 	return ud.admin
+}
+
+func (ud *userDomain) GetinstitutionID() uuid.UUID {
+	return ud.institutionID
 }
 
 func (ud *userDomain) EncryptPassword() {
@@ -57,5 +72,5 @@ func (ud *userDomain) ToString() string {
 		adminStr = "true"
 	}
 
-	return fmt.Sprintf("{Email: %s, Name: %s, Admin: %s}", ud.email, ud.name, adminStr)
+	return fmt.Sprintf("{Email: %s, Name: %s, Role: %s, Admin: %s, institutionID: %s}", ud.email, ud.name, ud.role, adminStr, ud.institutionID)
 }
