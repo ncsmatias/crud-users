@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/ncsmatias/crud-users/src/configuration/database/postgresdb"
 	"github.com/ncsmatias/crud-users/src/controller/routes"
 )
 
@@ -12,6 +13,10 @@ func main() {
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
+	}
+
+	if _, err := postgresdb.NewPostgresDBConnection(); err != nil {
+		log.Fatal(err)
 	}
 
 	router := gin.Default()
