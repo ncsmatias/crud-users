@@ -10,6 +10,13 @@ import (
 
 func (sr *userRepository) CreateUser(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, *resterr.RestErr) {
 
-	sr.queries.CreateUser(context.Background(), repository.CreateUserParams{})
-	return nil, nil
+	userID, err := sr.queries.CreateUser(context.Background(), repository.CreateUserParams{})
+
+	if err != nil {
+		return nil, resterr.InternalServerError("internal sever error to execute query to create user")
+
+	}
+
+	userDomain.SetID(userID)
+	return userDomain, nil
 }

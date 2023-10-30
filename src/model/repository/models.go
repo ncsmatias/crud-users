@@ -11,10 +11,24 @@ import (
 	"github.com/google/uuid"
 )
 
+type Address struct {
+	AddressID    uuid.UUID      `json:"address_id"`
+	Street       string         `json:"street"`
+	Neighborhood string         `json:"neighborhood"`
+	City         string         `json:"city"`
+	State        string         `json:"state"`
+	ZipCode      string         `json:"zip_code"`
+	Notes        sql.NullString `json:"notes"`
+	CreatedAt    time.Time      `json:"created_at"`
+}
+
 type Institution struct {
-	InstitutionID uuid.UUID      `json:"institution_id"`
-	Name          string         `json:"name"`
-	Phone         sql.NullString `json:"phone"`
+	InstitutionID   uuid.UUID      `json:"institution_id"`
+	InstitutionType string         `json:"institution_type"`
+	Name            string         `json:"name"`
+	Phone           sql.NullString `json:"phone"`
+	AddressID       uuid.NullUUID  `json:"address_id"`
+	CreatedAt       time.Time      `json:"created_at"`
 }
 
 type Professor struct {
@@ -30,6 +44,7 @@ type Student struct {
 	StudentType sql.NullString `json:"student_type"`
 	UserID      uuid.NullUUID  `json:"user_id"`
 	ProfessorID uuid.NullUUID  `json:"professor_id"`
+	CreatedAt   time.Time      `json:"created_at"`
 }
 
 type User struct {
