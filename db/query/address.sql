@@ -13,7 +13,7 @@ insert into "addresses" (
 -- name: UpdateAddress :one
 update "addresses"
 set street = $1, neighborhood = $2, city = $3, state = $4, zip_code = $5, notes = $6
-where address_id = $7;
+where address_id = $7 returning *;
 
 -- name: GetAddressByZIPCode :one
 select (
@@ -24,7 +24,7 @@ select (
   state,
   zip_code,
   notes
-) from "addresses" where zip_code = $1;
+) from "addresses" where zip_code = $1 limit 1;
 
 -- name: GetAddressByID :one
 select (
@@ -35,4 +35,4 @@ select (
   state,
   zip_code,
   notes
-) from "addresses" where address_id = $1;
+) from "addresses" where address_id = $1 limit 1;
