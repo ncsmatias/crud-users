@@ -1,6 +1,6 @@
 create table "professors" (
-  "ID" uuid primary key default uuid_generate_v4(),
+  "professor_id" uuid primary key default uuid_generate_v4(),
   "department" varchar not null,
-  "user_id" uuid REFERENCES users ("ID"),
+  "user_id" uuid REFERENCES users ("user_id"),
   "created_at" timestamptz not null default (now())
 )

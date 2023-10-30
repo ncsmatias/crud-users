@@ -5,6 +5,7 @@ import (
 
 	"github.com/ncsmatias/crud-users/src/configuration/resterr"
 	"github.com/ncsmatias/crud-users/src/model/domain"
+	"github.com/ncsmatias/crud-users/src/model/repository"
 )
 
 func NewUserRepository(database *sql.DB) UserRepositoryInterface {
@@ -17,4 +18,5 @@ type UserRepositoryInterface interface {
 
 type userRepository struct {
 	databaseConnection *sql.DB
+	queries            *repository.Queries
 }
