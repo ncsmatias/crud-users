@@ -9,7 +9,10 @@ import (
 )
 
 func NewUserRepository(database *sql.DB) UserRepositoryInterface {
-	return &userRepository{databaseConnection: database}
+	return &userRepository{
+		databaseConnection: database,
+		queries:            repository.New(database),
+	}
 }
 
 type UserRepositoryInterface interface {

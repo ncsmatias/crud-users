@@ -15,12 +15,13 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	if _, err := postgresdb.NewPostgresDBConnection(); err != nil {
+	conn, err := postgresdb.NewPostgresDBConnection()
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	router := gin.Default()
-	routes.InitRoutes(&router.RouterGroup)
+	routes.InitRoutes(&router.RouterGroup, conn)
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}

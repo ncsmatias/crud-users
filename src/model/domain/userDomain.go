@@ -3,93 +3,85 @@ package domain
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"encoding/json"
 	"fmt"
 
 	"github.com/google/uuid"
-	globaltypes "github.com/ncsmatias/crud-users/src/configuration/globalTypes"
 )
 
 type UserDomainInterface interface {
+	GetID() uuid.UUID
 	GetEmail() string
 	GetName() string
 	GetPassword() string
-	GetRole() globaltypes.UserRole
+	GetRole() string
 	GetAdmin() bool
 	GetinstitutionID() uuid.UUID
 
 	SetID(uuid.UUID)
 
-	GetJSONValue() (string, error)
 	EncryptPassword()
 	ToString() string
 }
 
-func NewUserDomain(email, name, password string, role globaltypes.UserRole, admin bool, institutionID uuid.UUID) UserDomainInterface {
-	return &userDomain{Email: email, Name: name, Password: password, Role: role, Admin: admin, InstitutionID: institutionID}
+func NewUserDomain(email, name, password string, role string, admin bool, institutionID uuid.UUID) UserDomainInterface {
+	return &userDomain{email: email, name: name, password: password, role: role, admin: admin, institutionID: institutionID}
 }
 
 type userDomain struct {
-	ID            uuid.UUID
-	Email         string
-	Name          string
-	Password      string
-	Role          globaltypes.UserRole
-	Admin         bool
-	InstitutionID uuid.UUID
+	id            uuid.UUID
+	email         string
+	name          string
+	password      string
+	role          string
+	admin         bool
+	institutionID uuid.UUID
+}
+
+func (ud *userDomain) GetID() uuid.UUID {
+	return ud.id
 }
 
 func (ud *userDomain) GetEmail() string {
-	return ud.Email
+	return ud.email
 }
 
 func (ud *userDomain) GetName() string {
-	return ud.Name
+	return ud.name
 }
 
 func (ud *userDomain) GetPassword() string {
-	return ud.Password
+	return ud.password
 }
 
-func (ud *userDomain) GetRole() globaltypes.UserRole {
-	return ud.Role
+func (ud *userDomain) GetRole() string {
+	return ud.role
 }
 
 func (ud *userDomain) GetAdmin() bool {
-	return ud.Admin
+	return ud.admin
 }
 
 func (ud *userDomain) GetinstitutionID() uuid.UUID {
-	return ud.InstitutionID
+	return ud.institutionID
 }
 
 func (ud *userDomain) SetID(userID uuid.UUID) {
-	ud.ID = userID
+	ud.id = userID
 }
 
 func (ud *userDomain) EncryptPassword() {
 	hash := md5.New()
 	defer hash.Reset()
 
-	hash.Write([]byte(ud.Password))
-	ud.Password = hex.EncodeToString(hash.Sum(nil))
-}
-
-func (ud *userDomain) GetJSONValue() (string, error) {
-	b, err := json.Marshal(ud)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
+	hash.Write([]byte(ud.password))
+	ud.password = hex.EncodeToString(hash.Sum(nil))
 }
 
 func (ud *userDomain) ToString() string {
 	adminStr := "false"
-	if ud.Admin {
+	if ud.admin {
 		adminStr = "true"
 	}
 
-	return fmt.Sprintf("{Email: %s, Name: %s, Role: %s, Admin: %s, institutionID: %s}", ud.Email, ud.Name, ud.Role, adminStr, ud.InstitutionID)
+	return fmt.Sprintf("{Email: %s, Name: %s, Role: %s, Admin: %s, institutionID: %s}", ud.email, ud.name, ud.role, adminStr, ud.institutionID)
 }

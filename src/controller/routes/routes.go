@@ -1,18 +1,23 @@
 package routes
 
 import (
+	"database/sql"
+
 	"github.com/gin-gonic/gin"
 	professorcontroller "github.com/ncsmatias/crud-users/src/controller/professorController"
 	studentcontroller "github.com/ncsmatias/crud-users/src/controller/studentController"
 	usercontroller "github.com/ncsmatias/crud-users/src/controller/userController"
+	userrepository "github.com/ncsmatias/crud-users/src/model/repository/userRepository"
 	professorservice "github.com/ncsmatias/crud-users/src/model/service/professorService"
 	studentservice "github.com/ncsmatias/crud-users/src/model/service/studentService"
 	userservice "github.com/ncsmatias/crud-users/src/model/service/userService"
 )
 
-func InitRoutes(r *gin.RouterGroup) {
+func InitRoutes(r *gin.RouterGroup, conn *sql.DB) {
 
-	userService := userservice.NewUserDomainService()
+	userRepository := userrepository.NewUserRepository(conn)
+
+	userService := userservice.NewUserDomainService(userRepository)
 	userController := usercontroller.NewUserController(userService)
 
 	r.GET("/user/id/:id", userController.FindUserByID)
