@@ -6,6 +6,19 @@ import (
 	"github.com/ncsmatias/crud-users/src/model/domain"
 )
 
+func ConvertAddressDomainToResponse(addressDomain domain.AddressDomainInterface) *response.AddressResponse {
+
+	return &response.AddressResponse{
+		ID:           addressDomain.GetID(),
+		Street:       addressDomain.GetStreet(),
+		Neighborhood: addressDomain.GetNeighborhood(),
+		City:         addressDomain.GetCity(),
+		State:        addressDomain.GetCity(),
+		ZipCode:      addressDomain.GetZipCode(),
+		Notes:        addressDomain.GetNotes(),
+	}
+}
+
 func ConvertUserDomainToResponse(userDomain domain.UserDomainInterface) response.UserResponse {
 	return response.UserResponse{
 		ID:            userDomain.GetID(),

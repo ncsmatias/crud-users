@@ -12,7 +12,7 @@ import (
 
 func (sr *userRepository) CreateUser(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, *resterr.RestErr) {
 
-	value := converter.ConvertDomainToEntity(userDomain)
+	value := converter.ConvertUserDomainToEntity(userDomain)
 	userID, err := sr.queries.CreateUser(context.Background(),
 		repository.CreateUserParams{
 			Email:         value.Email,
@@ -32,5 +32,5 @@ func (sr *userRepository) CreateUser(userDomain domain.UserDomainInterface) (dom
 
 	value.ID = userID
 
-	return converter.ConvertEntityToDomain(*value), nil
+	return converter.ConvertUserEntityToDomain(*value), nil
 }

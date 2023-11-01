@@ -4,16 +4,28 @@ import (
 	"database/sql"
 
 	"github.com/gin-gonic/gin"
+	addresscontroller "github.com/ncsmatias/crud-users/src/controller/addressController"
 	professorcontroller "github.com/ncsmatias/crud-users/src/controller/professorController"
 	studentcontroller "github.com/ncsmatias/crud-users/src/controller/studentController"
 	usercontroller "github.com/ncsmatias/crud-users/src/controller/userController"
+	addressrepository "github.com/ncsmatias/crud-users/src/model/repository/addressRepository"
 	userrepository "github.com/ncsmatias/crud-users/src/model/repository/userRepository"
+	addressservice "github.com/ncsmatias/crud-users/src/model/service/addressService"
 	professorservice "github.com/ncsmatias/crud-users/src/model/service/professorService"
 	studentservice "github.com/ncsmatias/crud-users/src/model/service/studentService"
 	userservice "github.com/ncsmatias/crud-users/src/model/service/userService"
 )
 
 func InitRoutes(r *gin.RouterGroup, conn *sql.DB) {
+
+	addressRepository := addressrepository.NewAddressRepository(conn)
+	addressService := addressservice.NewAddressDomainService(addressRepository)
+	addressController := addresscontroller.NewAddressController(addressService)
+
+	r.GET("/address/zip-code/:id", addressController.FindAddressByZipCode)
+	r.POST("/address", addressController.CreateAddress)
+	r.PUT("/address", addressController.UpdateAddress)
+	r.DELETE("/address/id/:id", addressController.DeleteAddress)
 
 	userRepository := userrepository.NewUserRepository(conn)
 

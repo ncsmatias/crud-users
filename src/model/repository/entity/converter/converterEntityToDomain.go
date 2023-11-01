@@ -6,7 +6,7 @@ import (
 	"github.com/ncsmatias/crud-users/src/model/repository/entity"
 )
 
-func ConvertEntityToDomain(
+func ConvertUserEntityToDomain(
 	entity entity.UserEntity,
 ) domain.UserDomainInterface {
 
@@ -38,4 +38,29 @@ func ConvertEntityToDomain(
 	userDomain.SetID(entity.ID)
 
 	return userDomain
+}
+
+func ConvertAddressEntityToDomain(
+	addressEntity entity.AddressEntity,
+) domain.AddressDomainInterface {
+
+	var notes string
+	if addressEntity.Notes.Valid {
+		notes = addressEntity.Notes.String
+	} else {
+		notes = ""
+	}
+
+	addressDomain := domain.NewAddressDomain(
+		addressEntity.Street,
+		addressEntity.Neighborhood,
+		addressEntity.City,
+		addressEntity.State,
+		addressEntity.ZipCode,
+		notes,
+	)
+
+	addressDomain.SetID(addressEntity.ID)
+
+	return addressDomain
 }
