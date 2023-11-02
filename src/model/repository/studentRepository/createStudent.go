@@ -2,7 +2,6 @@ package studentrepository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/ncsmatias/crud-users/src/configuration/resterr"
 	"github.com/ncsmatias/crud-users/src/model/domain"
@@ -14,7 +13,6 @@ func (sr *studentRepository) CreateStudent(studentDomain domain.StudentDomainInt
 
 	value := converter.ConvertStudentDomainToEntity(studentDomain)
 
-	fmt.Println("value", value)
 	studentID, err := sr.queries.CreateStudent(context.Background(), repository.CreateStudentParams{
 		Course:      value.Course,
 		StudentType: value.StudentType,
