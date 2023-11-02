@@ -20,3 +20,18 @@ func (ud *userDomainService) CreateUser(userDomain domain.UserDomainInterface) (
 	}
 	return userDomainRepository, nil
 }
+
+func (ud *userDomainService) CreateUserTypeProfessor(professorDomain domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr) {
+
+	journey := zap.String("journey", "[model] create user type professor")
+
+	logger.Info("new user type professor created", journey)
+
+	professorDomainRepository, err := ud.userRepository.CreateUserTypeProfessor(professorDomain)
+
+	if err != nil {
+		return nil, resterr.BadRequestError("Faild create user db")
+	}
+
+	return professorDomainRepository, nil
+}

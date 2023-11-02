@@ -37,14 +37,27 @@ func (uc *userController) CreateUser(c *gin.Context) {
 		userRequest.InstitutionID,
 	)
 
-	result, err := uc.service.CreateUser(userDomain)
+	userResult, err := uc.service.CreateUser(userDomain)
 	if err != nil {
 
 		c.JSON(err.Code, err)
 		return
 	}
 
-	logger.Info("New user created", journey, zap.String("user", result.ToString()))
-	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(result))
+	var professorReult domain.ProfessorDomainInterface
+	if userRequest.Role == "professor" {
+		professorDomain := domain.NewProfessorDomain(userRequest.Department, userResult.GetID())
+
+		professorReult, err = uc.service.CreateUserTypeProfessor(professorDomain)
+
+		if err != nil {
+
+			c.JSON(err.Code, err)
+			return
+		}
+	}
+
+	logger.Info("New user created", journey, zap.String("user", userResult.ToString()))
+	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(userResult, professorReult))
 
 }

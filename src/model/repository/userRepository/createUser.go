@@ -34,3 +34,21 @@ func (sr *userRepository) CreateUser(userDomain domain.UserDomainInterface) (dom
 
 	return converter.ConvertUserEntityToDomain(*value), nil
 }
+
+func (sr *userRepository) CreateUserTypeProfessor(professorDomain domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr) {
+
+	value := converter.ConvertProfessorDomainToEntity(professorDomain)
+
+	professorID, err := sr.queries.CreateProfessor(context.Background(), repository.CreateProfessorParams{
+		Department: value.Department,
+		UserID:     value.UserID,
+	})
+
+	if err != nil {
+		return nil, resterr.InternalServerError("internal sever error to execute query to create user")
+	}
+
+	value.ID = professorID
+
+	return converter.ConvertProfessorEntityToDomain(*value), nil
+}
