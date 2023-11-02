@@ -7,9 +7,14 @@ import (
 	"go.uber.org/zap"
 )
 
-func (sd *StudentDomainService) CreateStudent(studentDomain domain.StudentDomainInterface) *resterr.RestErr {
+func (sd *StudentDomainService) CreateStudent(studentDomain domain.StudentDomainInterface) (domain.StudentDomainInterface, *resterr.RestErr) {
 	journey := zap.String("journey", "[model] create student")
 
+	studentDomainRepository, err := sd.studentRepository.CreateStudent(studentDomain)
+
+	if err != nil {
+		return nil, resterr.BadRequestError("Faild create user db")
+	}
 	logger.Info("new user created", journey)
-	return nil
+	return studentDomainRepository, nil
 }

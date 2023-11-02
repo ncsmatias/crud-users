@@ -116,3 +116,47 @@ func ConvertProfessorEntityToDomain(
 	return professorDomain
 
 }
+
+func ConvertStudentEntityToDomain(
+	studentEntity entity.StudentEntity,
+) domain.StudentDomainInterface {
+
+	var professorID uuid.UUID
+	if studentEntity.ProfessorID.Valid {
+		professorID = studentEntity.ProfessorID.UUID
+	} else {
+		professorID, _ = uuid.Parse("00000000-0000-0000-0000-000000000000")
+	}
+
+	var userID uuid.UUID
+	if studentEntity.UserID.Valid {
+		userID = studentEntity.UserID.UUID
+	} else {
+		userID, _ = uuid.Parse("00000000-0000-0000-0000-000000000000")
+	}
+
+	var studentType string
+	if studentEntity.StudentType.Valid {
+		studentType = studentEntity.StudentType.String
+	} else {
+		studentType = ""
+	}
+
+	var course string
+	if studentEntity.Course.Valid {
+		course = studentEntity.Course.String
+	} else {
+		course = ""
+	}
+
+	studentDomain := domain.NewStudentDomain(
+		course,
+		studentType,
+		professorID,
+		userID,
+	)
+
+	studentDomain.SetID(studentEntity.ID)
+
+	return studentDomain
+}

@@ -52,3 +52,15 @@ func ConvertProfessorDomainToEntity(
 		UserID:     uuid.NullUUID{UUID: professorDomain.GetUserID(), Valid: true},
 	}
 }
+
+func ConvertStudentDomainToEntity(
+	studentDomain domain.StudentDomainInterface,
+) *entity.StudentEntity {
+
+	return &entity.StudentEntity{
+		Course:      sql.NullString{String: studentDomain.GetCourse(), Valid: true},
+		StudentType: sql.NullString{String: studentDomain.GetStudentType(), Valid: true},
+		ProfessorID: uuid.NullUUID{UUID: studentDomain.GetProfessorID(), Valid: true},
+		UserID:      uuid.NullUUID{UUID: studentDomain.GetUserID(), Valid: true},
+	}
+}

@@ -24,14 +24,15 @@ func (sc *studentController) CreateStudent(c *gin.Context) {
 		return
 	}
 
-	domain := domain.NewStudentDomain(studentRequest.Course, studentRequest.TypeStudent, studentRequest.ProfessorID)
+	domain := domain.NewStudentDomain(studentRequest.Course, studentRequest.TypeStudent, studentRequest.ProfessorID, studentRequest.UserID)
+	result, err := sc.service.CreateStudent(domain)
 
-	if err := sc.service.CreateStudent(domain); err != nil {
+	if err != nil {
 
 		c.JSON(err.Code, err)
 		return
 	}
 
-	logger.Info("New student created", journey, zap.String("user", domain.ToString()))
-	c.JSON(http.StatusOK, view.ConvertStudentDomainToResponse(domain))
+	logger.Info("New student created", journey, zap.String("user", result.ToString()))
+	c.JSON(http.StatusOK, view.ConvertStudentDomainToResponse(result))
 }

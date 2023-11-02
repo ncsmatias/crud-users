@@ -7,4 +7,5 @@ type StudentResponse struct {
 	Course      string    `json:"course"`
 	TypeStudent string    `json:"type_student"`
 	ProfessorID uuid.UUID `json:"professor_id"`
+	UserID      uuid.UUID `json:"user_id"`
 }

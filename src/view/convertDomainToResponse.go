@@ -1,7 +1,6 @@
 package view
 
 import (
-	"github.com/google/uuid"
 	"github.com/ncsmatias/crud-users/src/controller/model/response"
 	"github.com/ncsmatias/crud-users/src/model/domain"
 )
@@ -41,7 +40,7 @@ func ConvertProfessorDomainToResponse(professorDomain domain.ProfessorDomainInte
 func ConvertStudentDomainToResponse(studentDomain domain.StudentDomainInterface) response.StudentResponse {
 
 	return response.StudentResponse{
-		ID:          uuid.UUID{},
+		ID:          studentDomain.GetID(),
 		Course:      studentDomain.GetCourse(),
 		TypeStudent: studentDomain.GetStudentType(),
 		ProfessorID: studentDomain.GetProfessorID(),

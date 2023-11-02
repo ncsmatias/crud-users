@@ -12,6 +12,7 @@ import (
 	addressrepository "github.com/ncsmatias/crud-users/src/model/repository/addressRepository"
 	institutionrepository "github.com/ncsmatias/crud-users/src/model/repository/institutionRepository"
 	professorrepositoty "github.com/ncsmatias/crud-users/src/model/repository/professorRepositoty"
+	studentrepository "github.com/ncsmatias/crud-users/src/model/repository/studentRepository"
 	userrepository "github.com/ncsmatias/crud-users/src/model/repository/userRepository"
 	addressservice "github.com/ncsmatias/crud-users/src/model/service/addressService"
 	institutionservice "github.com/ncsmatias/crud-users/src/model/service/institutionService"
@@ -58,7 +59,8 @@ func InitRoutes(r *gin.RouterGroup, conn *sql.DB) {
 	r.POST("/professor", professorController.CreateProfessor)
 	r.PUT("/professor/:id", professorController.UpdateProfessor)
 
-	studentService := studentservice.NewStudentDomainService()
+	studentRepository := studentrepository.NewStudentRepository(conn)
+	studentService := studentservice.NewStudentDomainService(studentRepository)
 	studentController := studentcontroller.NewStudentController(studentService)
 
 	r.POST("/student", studentController.CreateStudent)
