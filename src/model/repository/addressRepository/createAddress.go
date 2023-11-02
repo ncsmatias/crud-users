@@ -25,7 +25,7 @@ func (ar *addressRepository) CreateAddress(addressDomain domain.AddressDomainInt
 
 	if err != nil {
 		fmt.Print("err", err)
-		return nil, resterr.InternalServerError("internal sever error to execute query to create address")
+		return nil, resterr.InternalServerError("Internal server error", err.Error())
 
 	}
 

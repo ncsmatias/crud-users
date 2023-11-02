@@ -5,10 +5,11 @@ import (
 )
 
 type RestErr struct {
-	Message string   `json:"message"`
-	Err     string   `json:"error"`
-	Code    int      `json:"code"`
-	Causes  []Causes `json:"causes"`
+	Message     string   `json:"message"`
+	Err         string   `json:"error"`
+	Description string   `json:"description"`
+	Code        int      `json:"code"`
+	Causes      []Causes `json:"causes"`
 }
 
 type Causes struct {
@@ -49,12 +50,13 @@ func BadRequestValidationError(message string, causes []Causes) *RestErr {
 	}
 }
 
-func InternalServerError(message string) *RestErr {
+func InternalServerError(message string, description string) *RestErr {
 
 	return &RestErr{
-		Message: message,
-		Err:     "internal server error",
-		Code:    http.StatusInternalServerError,
+		Message:     message,
+		Err:         "internal server error",
+		Description: description,
+		Code:        http.StatusInternalServerError,
 	}
 }
 

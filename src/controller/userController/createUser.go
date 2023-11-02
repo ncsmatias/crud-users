@@ -40,6 +40,7 @@ func (uc *userController) CreateUser(c *gin.Context) {
 	userResult, err := uc.service.CreateUser(userDomain)
 	if err != nil {
 
+		logger.Error("Error service create user", err, journey)
 		c.JSON(err.Code, err)
 		return
 	}
@@ -52,6 +53,7 @@ func (uc *userController) CreateUser(c *gin.Context) {
 
 		if err != nil {
 
+			logger.Error("Error service create professor", err, journey)
 			c.JSON(err.Code, err)
 			return
 		}
@@ -62,6 +64,13 @@ func (uc *userController) CreateUser(c *gin.Context) {
 		studentDomain := domain.NewStudentDomain(userRequest.Course, userRequest.TypeStudent, userRequest.ProfessorID, userResult.GetID())
 
 		studentResult, err = uc.service.CreateUserTypeStudent(studentDomain)
+
+		if err != nil {
+
+			logger.Error("Error service create student", err, journey)
+			c.JSON(err.Code, err)
+			return
+		}
 	}
 
 	logger.Info("New user created", journey, zap.String("user", userResult.ToString()))

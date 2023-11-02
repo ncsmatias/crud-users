@@ -19,7 +19,7 @@ func (pr *professorRepository) CreateProfessor(professorDomain domain.ProfessorD
 	})
 
 	if err != nil {
-		return nil, resterr.InternalServerError("internal sever error to execute query to create user")
+		return nil, resterr.InternalServerError("Internal server error", err.Error())
 	}
 
 	value.ID = professorID
