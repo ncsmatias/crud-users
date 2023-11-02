@@ -12,5 +12,9 @@ type UserResponse struct {
 	Admin         bool      `json:"admin"`
 	InstitutionID uuid.UUID `json:"institution_id"`
 	Department    string    `json:"department,omitempty"`
-	ProfessorID   uuid.UUID `json:"professor_id,omitempty"`
+
+	Course      string `json:"course,omitempty"`
+	TypeStudent string `json:"type_student,omitempty"`
+
+	ProfessorID uuid.UUID `json:"professor_id,omitempty"`
 }

@@ -17,6 +17,7 @@ type userDomainService struct {
 type UserDomainServiceInterface interface {
 	CreateUser(domain.UserDomainInterface) (domain.UserDomainInterface, *resterr.RestErr)
 	CreateUserTypeProfessor(domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr)
+	CreateUserTypeStudent(domain.StudentDomainInterface) (domain.StudentDomainInterface, *resterr.RestErr)
 	UpdateUser(string, domain.UserDomainInterface) *resterr.RestErr
 	FindUser(string) (*domain.UserDomainInterface, *resterr.RestErr)
 	DeleteUser(string) *resterr.RestErr

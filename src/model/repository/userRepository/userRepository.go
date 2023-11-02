@@ -18,6 +18,7 @@ func NewUserRepository(database *sql.DB) UserRepositoryInterface {
 type UserRepositoryInterface interface {
 	CreateUser(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, *resterr.RestErr)
 	CreateUserTypeProfessor(professorDomain domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr)
+	CreateUserTypeStudent(studentDomain domain.StudentDomainInterface) (domain.StudentDomainInterface, *resterr.RestErr)
 }
 
 type userRepository struct {

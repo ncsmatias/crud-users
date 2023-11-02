@@ -21,6 +21,7 @@ func ConvertAddressDomainToResponse(addressDomain domain.AddressDomainInterface)
 func ConvertUserDomainToResponse(
 	userDomain domain.UserDomainInterface,
 	professorDomain domain.ProfessorDomainInterface,
+	studentDomain domain.StudentDomainInterface,
 ) response.UserResponse {
 
 	if professorDomain != nil {
@@ -34,6 +35,21 @@ func ConvertUserDomainToResponse(
 
 			Department:  professorDomain.GetDepartment(),
 			ProfessorID: professorDomain.GetID(),
+		}
+	}
+
+	if studentDomain != nil {
+		return response.UserResponse{
+			ID:            userDomain.GetID(),
+			Email:         userDomain.GetEmail(),
+			Name:          userDomain.GetName(),
+			Role:          userDomain.GetRole(),
+			Admin:         userDomain.GetAdmin(),
+			InstitutionID: userDomain.GetinstitutionID(),
+
+			Course:      studentDomain.GetCourse(),
+			ProfessorID: studentDomain.GetProfessorID(),
+			TypeStudent: studentDomain.GetStudentType(),
 		}
 	}
 

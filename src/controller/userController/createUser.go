@@ -57,7 +57,14 @@ func (uc *userController) CreateUser(c *gin.Context) {
 		}
 	}
 
+	var studentResult domain.StudentDomainInterface
+	if userRequest.Role == "student" {
+		studentDomain := domain.NewStudentDomain(userRequest.Course, userRequest.TypeStudent, userRequest.ProfessorID, userResult.GetID())
+
+		studentResult, err = uc.service.CreateUserTypeStudent(studentDomain)
+	}
+
 	logger.Info("New user created", journey, zap.String("user", userResult.ToString()))
-	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(userResult, professorReult))
+	c.JSON(http.StatusOK, view.ConvertUserDomainToResponse(userResult, professorReult, studentResult))
 
 }

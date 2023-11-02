@@ -52,3 +52,22 @@ func (sr *userRepository) CreateUserTypeProfessor(professorDomain domain.Profess
 
 	return converter.ConvertProfessorEntityToDomain(*value), nil
 }
+
+func (sr *userRepository) CreateUserTypeStudent(studentDomain domain.StudentDomainInterface) (domain.StudentDomainInterface, *resterr.RestErr) {
+	value := converter.ConvertStudentDomainToEntity(studentDomain)
+
+	studentID, err := sr.queries.CreateStudent(context.Background(), repository.CreateStudentParams{
+		Course:      value.Course,
+		StudentType: value.StudentType,
+		ProfessorID: value.ProfessorID,
+		UserID:      value.UserID,
+	})
+
+	if err != nil {
+		return nil, resterr.InternalServerError("internal sever error to execute query to create user")
+	}
+
+	value.ID = studentID
+
+	return converter.ConvertStudentEntityToDomain(*value), nil
+}
