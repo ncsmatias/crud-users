@@ -64,3 +64,33 @@ func ConvertAddressEntityToDomain(
 
 	return addressDomain
 }
+
+func ConvertInstitutionEntityToDomain(
+	institutionEntity entity.InstitutionEntity,
+) domain.InstitutionDomainInterface {
+
+	var phone string
+	if institutionEntity.Phone.Valid {
+		phone = institutionEntity.Phone.String
+	} else {
+		phone = ""
+	}
+
+	var addressID uuid.UUID
+	if institutionEntity.AddressID.Valid {
+		addressID = institutionEntity.AddressID.UUID
+	} else {
+		addressID, _ = uuid.Parse("00000000-0000-0000-0000-000000000000")
+	}
+
+	institutionDomain := domain.NewInstitutionDomain(
+		institutionEntity.InstitutionType,
+		institutionEntity.Name,
+		phone,
+		addressID,
+	)
+
+	institutionDomain.SetID(institutionEntity.ID)
+
+	return institutionDomain
+}

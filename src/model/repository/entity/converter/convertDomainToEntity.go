@@ -33,3 +33,14 @@ func ConvertAddressDomainToEntity(
 		Notes:        sql.NullString{String: addressDomain.GetNotes(), Valid: true},
 	}
 }
+
+func ConvertInstitutionDomainToEntity(
+	institutionDomain domain.InstitutionDomainInterface,
+) *entity.InstitutionEntity {
+	return &entity.InstitutionEntity{
+		InstitutionType: institutionDomain.GetInstitutionType(),
+		Name:            institutionDomain.GetName(),
+		Phone:           sql.NullString{String: institutionDomain.GetPhone(), Valid: true},
+		AddressID:       uuid.NullUUID{UUID: institutionDomain.GetAddressID(), Valid: true},
+	}
+}

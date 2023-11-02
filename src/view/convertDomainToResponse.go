@@ -47,3 +47,14 @@ func ConvertStudentDomainToResponse(studentDomain domain.StudentDomainInterface)
 		ProfessorID: studentDomain.GetProfessorID(),
 	}
 }
+
+func ConvertInstitutionDomainToResponse(institutionDomain domain.InstitutionDomainInterface) response.InstitutionRequest {
+
+	return response.InstitutionRequest{
+		ID:              institutionDomain.GetID(),
+		InstitutionType: institutionDomain.GetInstitutionType(),
+		Name:            institutionDomain.GetName(),
+		Phone:           institutionDomain.GetPhone(),
+		AddressID:       institutionDomain.GetAddressID(),
+	}
+}
