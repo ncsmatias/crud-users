@@ -10,7 +10,6 @@ func NewStudentController(service studentservice.StudentDomainServiceInterface) 
 }
 
 type StudentControllerInterface interface {
-	CreateStudent(c *gin.Context)
 	UpdateStudent(c *gin.Context)
 }
 

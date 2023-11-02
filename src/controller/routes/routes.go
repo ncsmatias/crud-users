@@ -56,13 +56,11 @@ func InitRoutes(r *gin.RouterGroup, conn *sql.DB) {
 	professorService := professorservice.NewProfessorDomainService(professorRepository)
 	professorController := professorcontroller.NewProfessorController(professorService)
 
-	r.POST("/professor", professorController.CreateProfessor)
 	r.PUT("/professor/:id", professorController.UpdateProfessor)
 
 	studentRepository := studentrepository.NewStudentRepository(conn)
 	studentService := studentservice.NewStudentDomainService(studentRepository)
 	studentController := studentcontroller.NewStudentController(studentService)
 
-	r.POST("/student", studentController.CreateStudent)
 	r.PUT("/student/:id", studentController.UpdateStudent)
 }

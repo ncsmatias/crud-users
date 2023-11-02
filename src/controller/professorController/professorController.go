@@ -10,7 +10,6 @@ func NewProfessorController(service professorservice.ProfessorDomainServiceInter
 }
 
 type ProfessorControllerInterface interface {
-	CreateProfessor(c *gin.Context)
 	UpdateProfessor(c *gin.Context)
 }
 

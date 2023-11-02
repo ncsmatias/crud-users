@@ -16,6 +16,5 @@ type ProfessorDomainService struct {
 }
 
 type ProfessorDomainServiceInterface interface {
-	CreateProfessor(domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr)
 	UpdateProfessor(uuid.UUID, domain.ProfessorDomainInterface) *resterr.RestErr
 }

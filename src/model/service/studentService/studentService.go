@@ -15,6 +15,5 @@ type StudentDomainService struct {
 }
 
 type StudentDomainServiceInterface interface {
-	CreateStudent(domain.StudentDomainInterface) (domain.StudentDomainInterface, *resterr.RestErr)
 	UpdateStudent(string, domain.StudentDomainInterface) *resterr.RestErr
 }
