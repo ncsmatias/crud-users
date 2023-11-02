@@ -44,3 +44,11 @@ func ConvertInstitutionDomainToEntity(
 		AddressID:       uuid.NullUUID{UUID: institutionDomain.GetAddressID(), Valid: true},
 	}
 }
+func ConvertProfessorDomainToEntity(
+	professorDomain domain.ProfessorDomainInterface,
+) *entity.ProfessorEntity {
+	return &entity.ProfessorEntity{
+		Department: professorDomain.GetDepartment(),
+		UserID:     uuid.NullUUID{UUID: professorDomain.GetUserID(), Valid: true},
+	}
+}

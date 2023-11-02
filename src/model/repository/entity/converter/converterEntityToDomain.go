@@ -94,3 +94,25 @@ func ConvertInstitutionEntityToDomain(
 
 	return institutionDomain
 }
+
+func ConvertProfessorEntityToDomain(
+	professorEntity entity.ProfessorEntity,
+) domain.ProfessorDomainInterface {
+
+	var userID uuid.UUID
+	if professorEntity.UserID.Valid {
+		userID = professorEntity.UserID.UUID
+	} else {
+		userID, _ = uuid.Parse("00000000-0000-0000-0000-000000000000")
+	}
+
+	professorDomain := domain.NewProfessorDomain(
+		professorEntity.Department,
+		userID,
+	)
+
+	professorDomain.SetID(professorEntity.ID)
+
+	return professorDomain
+
+}

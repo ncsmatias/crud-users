@@ -1,7 +1,6 @@
 package professorcontroller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,16 +24,15 @@ func (pc *professorController) CreateProfessor(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("id", professorRequest.UserID)
-
 	domain := domain.NewProfessorDomain(professorRequest.Department, professorRequest.UserID)
 
-	if err := pc.service.CreateProfessor(domain); err != nil {
+	result, err := pc.service.CreateProfessor(domain)
+	if err != nil {
 
 		c.JSON(err.Code, err)
 		return
 	}
 
-	logger.Info("New professor created", journey, zap.String("user", domain.ToString()))
-	c.JSON(http.StatusOK, view.ConvertProfessorDomainToResponse(domain))
+	logger.Info("New professor created", journey, zap.String("user", result.ToString()))
+	c.JSON(http.StatusOK, view.ConvertProfessorDomainToResponse(result))
 }

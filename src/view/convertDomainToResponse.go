@@ -32,7 +32,7 @@ func ConvertUserDomainToResponse(userDomain domain.UserDomainInterface) response
 
 func ConvertProfessorDomainToResponse(professorDomain domain.ProfessorDomainInterface) response.ProfessorResponse {
 	return response.ProfessorResponse{
-		ID:         uuid.UUID{},
+		ID:         professorDomain.GetID(),
 		Department: professorDomain.GetDepartment(),
 		UserID:     professorDomain.GetUserID(),
 	}

@@ -1,15 +1,17 @@
 package professorservice
 
 import (
-	"github.com/ncsmatias/crud-users/src/configuration/logger"
 	"github.com/ncsmatias/crud-users/src/configuration/resterr"
 	"github.com/ncsmatias/crud-users/src/model/domain"
-	"go.uber.org/zap"
 )
 
-func (ps *ProfessorDomainService) CreateProfessor(professorDomain domain.ProfessorDomainInterface) *resterr.RestErr {
-	journey := zap.String("journey", "[model] create professor")
+func (ps *ProfessorDomainService) CreateProfessor(professorDomain domain.ProfessorDomainInterface) (domain.ProfessorDomainInterface, *resterr.RestErr) {
 
-	logger.Info("new user created", journey)
-	return nil
+	professorDomainRepository, err := ps.professorRepository.CreateProfessor(professorDomain)
+
+	if err != nil {
+		return nil, resterr.BadRequestError("Faild create professor db")
+	}
+
+	return professorDomainRepository, nil
 }
