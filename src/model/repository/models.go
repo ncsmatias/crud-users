@@ -11,23 +11,21 @@ import (
 	"github.com/google/uuid"
 )
 
-type Address struct {
-	AddressID    uuid.UUID      `json:"address_id"`
-	Street       string         `json:"street"`
-	Neighborhood string         `json:"neighborhood"`
-	City         string         `json:"city"`
-	State        string         `json:"state"`
-	ZipCode      string         `json:"zip_code"`
-	Notes        sql.NullString `json:"notes"`
-	CreatedAt    time.Time      `json:"created_at"`
-}
-
 type Institution struct {
 	InstitutionID   uuid.UUID      `json:"institution_id"`
 	InstitutionType string         `json:"institution_type"`
 	Name            string         `json:"name"`
 	Phone           sql.NullString `json:"phone"`
-	AddressID       uuid.NullUUID  `json:"address_id"`
+	ZipCode         sql.NullString `json:"zip_code"`
+	Street          sql.NullString `json:"street"`
+	Number          sql.NullString `json:"number"`
+	Neighborhood    sql.NullString `json:"neighborhood"`
+	City            sql.NullString `json:"city"`
+	State           sql.NullString `json:"state"`
+	Uf              sql.NullString `json:"uf"`
+	Country         sql.NullString `json:"country"`
+	CountryCode     sql.NullString `json:"country_code"`
+	IsActive        bool           `json:"is_active"`
 	CreatedAt       time.Time      `json:"created_at"`
 }
 

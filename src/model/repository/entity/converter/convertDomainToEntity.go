@@ -21,19 +21,6 @@ func ConvertUserDomainToEntity(
 	}
 }
 
-func ConvertAddressDomainToEntity(
-	addressDomain domain.AddressDomainInterface,
-) *entity.AddressEntity {
-	return &entity.AddressEntity{
-		Street:       addressDomain.GetStreet(),
-		Neighborhood: addressDomain.GetNeighborhood(),
-		City:         addressDomain.GetCity(),
-		State:        addressDomain.GetState(),
-		ZipCode:      addressDomain.GetZipCode(),
-		Notes:        sql.NullString{String: addressDomain.GetNotes(), Valid: true},
-	}
-}
-
 func ConvertInstitutionDomainToEntity(
 	institutionDomain domain.InstitutionDomainInterface,
 ) *entity.InstitutionEntity {
@@ -41,7 +28,15 @@ func ConvertInstitutionDomainToEntity(
 		InstitutionType: institutionDomain.GetInstitutionType(),
 		Name:            institutionDomain.GetName(),
 		Phone:           sql.NullString{String: institutionDomain.GetPhone(), Valid: true},
-		AddressID:       uuid.NullUUID{UUID: institutionDomain.GetAddressID(), Valid: true},
+		ZipCode:         sql.NullString{String: institutionDomain.GetZipCode(), Valid: true},
+		Street:          sql.NullString{String: institutionDomain.GetStreet(), Valid: true},
+		Number:          sql.NullString{String: institutionDomain.GetNumber(), Valid: true},
+		Neighborhood:    sql.NullString{String: institutionDomain.GetNeighborhood(), Valid: true},
+		City:            sql.NullString{String: institutionDomain.GetCity(), Valid: true},
+		State:           sql.NullString{String: institutionDomain.GetState(), Valid: true},
+		UF:              sql.NullString{String: institutionDomain.GetUF(), Valid: true},
+		Country:         sql.NullString{String: institutionDomain.GetCountry(), Valid: true},
+		CountryCode:     sql.NullString{String: institutionDomain.GetCountryCode(), Valid: true},
 	}
 }
 func ConvertProfessorDomainToEntity(

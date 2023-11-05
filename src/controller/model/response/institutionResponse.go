@@ -2,10 +2,18 @@ package response
 
 import "github.com/google/uuid"
 
-type InstitutionRequest struct {
+type InstitutionResponse struct {
 	ID              uuid.UUID
 	InstitutionType string
 	Name            string
 	Phone           string
-	AddressID       uuid.UUID
+	ZipCode         string
+	Street          string
+	Number          string
+	Neighborhood    string
+	City            string
+	State           string
+	UF              string
+	Country         string
+	CountryCode     string
 }

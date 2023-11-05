@@ -17,15 +17,32 @@ insert into "institutions" (
   institution_type,
   name,
   phone,
-  address_id
-) values ($1, $2, $3, $4) returning institution_id
+  zip_code,
+  street,
+  number,
+  neighborhood,
+  city,
+  state,
+  UF,
+  country,
+  country_code
+) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
+returning institution_id
 `
 
 type CreateInstitutionParams struct {
 	InstitutionType string         `json:"institution_type"`
 	Name            string         `json:"name"`
 	Phone           sql.NullString `json:"phone"`
-	AddressID       uuid.NullUUID  `json:"address_id"`
+	ZipCode         sql.NullString `json:"zip_code"`
+	Street          sql.NullString `json:"street"`
+	Number          sql.NullString `json:"number"`
+	Neighborhood    sql.NullString `json:"neighborhood"`
+	City            sql.NullString `json:"city"`
+	State           sql.NullString `json:"state"`
+	Uf              sql.NullString `json:"uf"`
+	Country         sql.NullString `json:"country"`
+	CountryCode     sql.NullString `json:"country_code"`
 }
 
 func (q *Queries) CreateInstitution(ctx context.Context, arg CreateInstitutionParams) (uuid.UUID, error) {
@@ -33,7 +50,15 @@ func (q *Queries) CreateInstitution(ctx context.Context, arg CreateInstitutionPa
 		arg.InstitutionType,
 		arg.Name,
 		arg.Phone,
-		arg.AddressID,
+		arg.ZipCode,
+		arg.Street,
+		arg.Number,
+		arg.Neighborhood,
+		arg.City,
+		arg.State,
+		arg.Uf,
+		arg.Country,
+		arg.CountryCode,
 	)
 	var institution_id uuid.UUID
 	err := row.Scan(&institution_id)
@@ -46,7 +71,15 @@ select (
   institution_type,
   name,
   phone,
-  address_id
+  zip_code,
+  street,
+  number,
+  city,
+  neighborhood,
+  state,
+  UF,
+  country,
+  country_code
 ) from "institutions"
 where institution_id = $1 limit 1
 `
@@ -64,9 +97,17 @@ select (
   institution_type,
   name,
   phone,
-  address_id
+  zip_code,
+  street,
+  number,
+  city,
+  neighborhood,
+  state,
+  UF,
+  country,
+  country_code
 ) from "institutions"
-where name like $1 limit 1
+where name like $1
 `
 
 func (q *Queries) GetInstitutionByName(ctx context.Context, name string) ([]interface{}, error) {
@@ -94,14 +135,34 @@ func (q *Queries) GetInstitutionByName(ctx context.Context, name string) ([]inte
 
 const updateInstitution = `-- name: UpdateInstitution :one
 update "institutions"
-set institution_type = $1, name = $2, phone = $3
-where institution_id = $4 returning institution_id, institution_type, name, phone, address_id, created_at
+set institution_type = $1, 
+    name = $2, 
+    phone = $3,
+    zip_code = $4,
+    street = $5,
+    number = $6,
+    city = $7,
+    neighborhood = $8,
+    state = $9,
+    UF = $10,
+    country = $11,
+    country_code = $12
+where institution_id = $13 returning institution_id, institution_type, name, phone, zip_code, street, number, neighborhood, city, state, uf, country, country_code, is_active, created_at
 `
 
 type UpdateInstitutionParams struct {
 	InstitutionType string         `json:"institution_type"`
 	Name            string         `json:"name"`
 	Phone           sql.NullString `json:"phone"`
+	ZipCode         sql.NullString `json:"zip_code"`
+	Street          sql.NullString `json:"street"`
+	Number          sql.NullString `json:"number"`
+	City            sql.NullString `json:"city"`
+	Neighborhood    sql.NullString `json:"neighborhood"`
+	State           sql.NullString `json:"state"`
+	Uf              sql.NullString `json:"uf"`
+	Country         sql.NullString `json:"country"`
+	CountryCode     sql.NullString `json:"country_code"`
 	InstitutionID   uuid.UUID      `json:"institution_id"`
 }
 
@@ -110,6 +171,15 @@ func (q *Queries) UpdateInstitution(ctx context.Context, arg UpdateInstitutionPa
 		arg.InstitutionType,
 		arg.Name,
 		arg.Phone,
+		arg.ZipCode,
+		arg.Street,
+		arg.Number,
+		arg.City,
+		arg.Neighborhood,
+		arg.State,
+		arg.Uf,
+		arg.Country,
+		arg.CountryCode,
 		arg.InstitutionID,
 	)
 	var i Institution
@@ -118,7 +188,16 @@ func (q *Queries) UpdateInstitution(ctx context.Context, arg UpdateInstitutionPa
 		&i.InstitutionType,
 		&i.Name,
 		&i.Phone,
-		&i.AddressID,
+		&i.ZipCode,
+		&i.Street,
+		&i.Number,
+		&i.Neighborhood,
+		&i.City,
+		&i.State,
+		&i.Uf,
+		&i.Country,
+		&i.CountryCode,
+		&i.IsActive,
 		&i.CreatedAt,
 	)
 	return i, err

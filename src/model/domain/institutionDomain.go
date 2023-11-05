@@ -11,19 +11,48 @@ type InstitutionDomainInterface interface {
 	GetInstitutionType() string
 	GetName() string
 	GetPhone() string
-	GetAddressID() uuid.UUID
+	GetZipCode() string
+	GetStreet() string
+	GetNumber() string
+	GetNeighborhood() string
+	GetCity() string
+	GetState() string
+	GetUF() string
+	GetCountry() string
+	GetCountryCode() string
 
 	SetID(uuid.UUID)
 
 	ToString() string
 }
 
-func NewInstitutionDomain(institutionType, name, phone string, addressID uuid.UUID) InstitutionDomainInterface {
+func NewInstitutionDomain(
+	institutionType,
+	name,
+	phone,
+	zipCode,
+	street,
+	number,
+	neighborhood,
+	city,
+	state,
+	uf,
+	country,
+	countryCode string,
+) InstitutionDomainInterface {
 	return &institutionDomain{
 		institutionType: institutionType,
 		name:            name,
 		phone:           phone,
-		addressID:       addressID,
+		zipCode:         zipCode,
+		street:          street,
+		number:          number,
+		neighborhood:    neighborhood,
+		city:            city,
+		state:           state,
+		uf:              uf,
+		country:         country,
+		countryCode:     countryCode,
 	}
 }
 
@@ -32,15 +61,55 @@ type institutionDomain struct {
 	institutionType string
 	name            string
 	phone           string
-	addressID       uuid.UUID
+	zipCode         string
+	street          string
+	number          string
+	neighborhood    string
+	city            string
+	state           string
+	uf              string
+	country         string
+	countryCode     string
+}
+
+func (instd *institutionDomain) GetCity() string {
+	return instd.city
+}
+
+func (instd *institutionDomain) GetCountry() string {
+	return instd.country
+}
+
+func (instd *institutionDomain) GetCountryCode() string {
+	return instd.countryCode
+}
+
+func (instd *institutionDomain) GetNeighborhood() string {
+	return instd.neighborhood
+}
+
+func (instd *institutionDomain) GetNumber() string {
+	return instd.number
+}
+
+func (instd *institutionDomain) GetState() string {
+	return instd.state
+}
+
+func (instd *institutionDomain) GetStreet() string {
+	return instd.street
+}
+
+func (instd *institutionDomain) GetUF() string {
+	return instd.uf
+}
+
+func (instd *institutionDomain) GetZipCode() string {
+	return instd.zipCode
 }
 
 func (instd *institutionDomain) SetID(institutionID uuid.UUID) {
 	instd.id = institutionID
-}
-
-func (instd *institutionDomain) GetAddressID() uuid.UUID {
-	return instd.addressID
 }
 
 func (instd *institutionDomain) GetID() uuid.UUID {
@@ -60,10 +129,9 @@ func (instd *institutionDomain) GetPhone() string {
 }
 
 func (instd *institutionDomain) ToString() string {
-	return fmt.Sprintf("ID: %s, InstitutionType: %s, Name: %s, Phone: %s, AddressID: %s", instd.id,
+	return fmt.Sprintf("ID: %s, InstitutionType: %s, Name: %s, Phone: %s", instd.id,
 		instd.institutionType,
 		instd.name,
 		instd.phone,
-		instd.addressID,
 	)
 }

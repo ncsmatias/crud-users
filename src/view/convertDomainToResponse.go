@@ -5,19 +5,6 @@ import (
 	"github.com/ncsmatias/crud-users/src/model/domain"
 )
 
-func ConvertAddressDomainToResponse(addressDomain domain.AddressDomainInterface) *response.AddressResponse {
-
-	return &response.AddressResponse{
-		ID:           addressDomain.GetID(),
-		Street:       addressDomain.GetStreet(),
-		Neighborhood: addressDomain.GetNeighborhood(),
-		City:         addressDomain.GetCity(),
-		State:        addressDomain.GetCity(),
-		ZipCode:      addressDomain.GetZipCode(),
-		Notes:        addressDomain.GetNotes(),
-	}
-}
-
 func ConvertUserDomainToResponse(
 	userDomain domain.UserDomainInterface,
 	professorDomain domain.ProfessorDomainInterface,
@@ -81,13 +68,21 @@ func ConvertStudentDomainToResponse(studentDomain domain.StudentDomainInterface)
 	}
 }
 
-func ConvertInstitutionDomainToResponse(institutionDomain domain.InstitutionDomainInterface) response.InstitutionRequest {
+func ConvertInstitutionDomainToResponse(institutionDomain domain.InstitutionDomainInterface) response.InstitutionResponse {
 
-	return response.InstitutionRequest{
+	return response.InstitutionResponse{
 		ID:              institutionDomain.GetID(),
 		InstitutionType: institutionDomain.GetInstitutionType(),
 		Name:            institutionDomain.GetName(),
 		Phone:           institutionDomain.GetPhone(),
-		AddressID:       institutionDomain.GetAddressID(),
+		ZipCode:         institutionDomain.GetZipCode(),
+		Street:          institutionDomain.GetStreet(),
+		Number:          institutionDomain.GetNumber(),
+		Neighborhood:    institutionDomain.GetNeighborhood(),
+		City:            institutionDomain.GetCity(),
+		State:           institutionDomain.GetState(),
+		UF:              institutionDomain.GetUF(),
+		Country:         institutionDomain.GetCountry(),
+		CountryCode:     institutionDomain.GetCountry(),
 	}
 }

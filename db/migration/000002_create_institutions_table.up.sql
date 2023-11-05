@@ -6,11 +6,12 @@ create table "institutions"(
   "zip_code" varchar,
   "street" varchar,
   "number" varchar,
+  "neighborhood" varchar,
   "city" varchar,
   "state" varchar,
-  "UF" varchar,
+  "uf" varchar,
   "country" varchar,
   "country_code" varchar,
-  "address_id" uuid REFERENCES addresses ("address_id"),
+  "is_active" boolean not null default true,
   "created_at" timestamptz not null default (now())
 );

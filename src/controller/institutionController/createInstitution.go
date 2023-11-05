@@ -13,10 +13,10 @@ import (
 )
 
 func (ic *institutionController) CreateInstitution(c *gin.Context) {
-	var resquestInstitution request.InstitutionRequest
+	var requestInstitution request.InstitutionRequest
 	journey := zap.String("journey", "[controller] create user")
 
-	if err := c.ShouldBindJSON(&resquestInstitution); err != nil {
+	if err := c.ShouldBindJSON(&requestInstitution); err != nil {
 		logger.Error("Error ShouldBindJSON", err, journey)
 		restErr := validation.ValidateUserError(err)
 
@@ -24,7 +24,20 @@ func (ic *institutionController) CreateInstitution(c *gin.Context) {
 		return
 	}
 
-	domain := domain.NewInstitutionDomain(resquestInstitution.InstitutionType, resquestInstitution.Name, resquestInstitution.Phone, resquestInstitution.AddressID)
+	domain := domain.NewInstitutionDomain(
+		requestInstitution.InstitutionType,
+		requestInstitution.Name,
+		requestInstitution.Phone,
+		requestInstitution.ZipCode,
+		requestInstitution.Street,
+		requestInstitution.Number,
+		requestInstitution.Neighborhood,
+		requestInstitution.City,
+		requestInstitution.State,
+		requestInstitution.UF,
+		requestInstitution.Country,
+		requestInstitution.CountryCode,
+	)
 
 	result, err := ic.service.CreateInstitution(domain)
 

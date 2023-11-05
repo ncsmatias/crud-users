@@ -40,31 +40,6 @@ func ConvertUserEntityToDomain(
 	return userDomain
 }
 
-func ConvertAddressEntityToDomain(
-	addressEntity entity.AddressEntity,
-) domain.AddressDomainInterface {
-
-	var notes string
-	if addressEntity.Notes.Valid {
-		notes = addressEntity.Notes.String
-	} else {
-		notes = ""
-	}
-
-	addressDomain := domain.NewAddressDomain(
-		addressEntity.Street,
-		addressEntity.Neighborhood,
-		addressEntity.City,
-		addressEntity.State,
-		addressEntity.ZipCode,
-		notes,
-	)
-
-	addressDomain.SetID(addressEntity.ID)
-
-	return addressDomain
-}
-
 func ConvertInstitutionEntityToDomain(
 	institutionEntity entity.InstitutionEntity,
 ) domain.InstitutionDomainInterface {
@@ -72,22 +47,66 @@ func ConvertInstitutionEntityToDomain(
 	var phone string
 	if institutionEntity.Phone.Valid {
 		phone = institutionEntity.Phone.String
-	} else {
-		phone = ""
 	}
 
-	var addressID uuid.UUID
-	if institutionEntity.AddressID.Valid {
-		addressID = institutionEntity.AddressID.UUID
-	} else {
-		addressID, _ = uuid.Parse("00000000-0000-0000-0000-000000000000")
+	var zipCode string
+	if institutionEntity.ZipCode.Valid {
+		zipCode = institutionEntity.ZipCode.String
+	}
+
+	var street string
+	if institutionEntity.Street.Valid {
+		street = institutionEntity.Street.String
+	}
+
+	var number string
+	if institutionEntity.Number.Valid {
+		number = institutionEntity.Number.String
+	}
+
+	var neighborhood string
+	if institutionEntity.Neighborhood.Valid {
+		neighborhood = institutionEntity.Neighborhood.String
+	}
+
+	var city string
+	if institutionEntity.City.Valid {
+		city = institutionEntity.City.String
+	}
+
+	var state string
+	if institutionEntity.State.Valid {
+		state = institutionEntity.State.String
+	}
+
+	var uf string
+	if institutionEntity.UF.Valid {
+		uf = institutionEntity.UF.String
+	}
+
+	var country string
+	if institutionEntity.Country.Valid {
+		country = institutionEntity.Country.String
+	}
+
+	var countryCode string
+	if institutionEntity.CountryCode.Valid {
+		countryCode = institutionEntity.CountryCode.String
 	}
 
 	institutionDomain := domain.NewInstitutionDomain(
 		institutionEntity.InstitutionType,
 		institutionEntity.Name,
 		phone,
-		addressID,
+		zipCode,
+		street,
+		number,
+		neighborhood,
+		city,
+		state,
+		uf,
+		country,
+		countryCode,
 	)
 
 	institutionDomain.SetID(institutionEntity.ID)
